@@ -7,7 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MaterialApp(
-    title: "MyApp",
+    title: "WA Direct",
     home: const HomeScreen(),
     theme: ThemeData(primarySwatch: Colors.purple),
   ));
