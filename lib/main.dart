@@ -33,7 +33,8 @@ void launchwa(
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     return;
   }
-  await launch("https://wa.me/${number2}?text=${messageController}");
+  await launch(
+      "https://wa.me/${number2}?text=${messageController.text.toString()}");
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -121,14 +122,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: 0,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(5.0),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
                         child: TextField(
+                          controller: _messageController,
                           keyboardType: TextInputType.text,
                           maxLines: 10,
                           maxLength: 150,
                           textAlignVertical: TextAlignVertical.top,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                               alignLabelWithHint: true,
                               hintText: "Enter message to send",
                               labelText: "Enter message to send",
