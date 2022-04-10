@@ -1,9 +1,11 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
 
 void main() {
   runApp(MaterialApp(
@@ -33,8 +35,14 @@ void launchwa(
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
     return;
   }
-  await launch(
-      "https://wa.me/${number2}?text=${messageController.text.toString()}");
+  if (kIsWeb) {
+    await launch(
+        "https://wa.me/${number2}?text=${messageController.text.toString()}");
+  } else {
+    await launch("whatsapp://send?phone=" +
+        number2 +
+        "&text=${messageController.text.toString()}");
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -143,9 +151,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ElevatedButton(
                         onPressed: () async {
                           number2 = selectedCountry + number.text.toString();
-                          launchwa(number2, _messageController, _globalKey,
-                              context, selectedCountry);
 
+                          if (kIsWeb) {
+                            launchwa(number2, _messageController, _globalKey,
+                                context, selectedCountry);
+                          } else {
+                            launchwa(number2, _messageController, _globalKey,
+                                context, selectedCountry);
+                          }
                           // snackBar =
                           //     SnackBar(content: Text(number2.toString()));
                           // ScaffoldMessenger.of(context).showSnackBar(snackBar);
